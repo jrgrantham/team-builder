@@ -54,6 +54,11 @@ function App() {
     setMemberForm(initialForm);
   }
 
+  const editMmber = e => {
+    e.preventDefault();
+    
+  }
+
   return (
   
     <div className="App">
@@ -62,11 +67,13 @@ function App() {
         onFirstNameChange={onFirstNameChange}
         onSurnameChange={onSurnameChange}
         formSubmit={formSubmit}
+        memberForm={memberForm}
       />
       {
         memberList.map(member => (
         <p key={member.id}>
-          {member.title} {member.firstName} {member.surname}
+          {member.title} {member.firstName} {member.surname} 
+          <button>Edit</button>
         </p>
         ))
       }
@@ -78,13 +85,14 @@ export default App;
 
 function MemberForm(props) {
 
-  const { onTitleChange, onFirstNameChange, onSurnameChange, formSubmit,  } = props;
+  const { onTitleChange, onFirstNameChange, onSurnameChange, formSubmit } = props;
+  const { title, firstName, surname } = props.memberForm;
 
   return (
     <form>
       <label htmlFor='titleInput'> Title </label>
       <input
-        // value=
+        value={title}
         id='titleInput' 
         type='text'
         onChange={onTitleChange}
