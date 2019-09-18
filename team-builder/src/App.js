@@ -1,6 +1,12 @@
 import React, { useState } from 'react';
-import logo from './logo.svg';
 import './App.css';
+import uuid from 'uuid';
+
+const initialMembers = [
+  {id: uuid(), name: 'Me', age: 40}
+];
+
+
 
 function App() {
   return (
@@ -8,6 +14,6 @@ function App() {
 
     </div>
   );
-}
+};
 
 export default App;
