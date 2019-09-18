@@ -10,12 +10,12 @@ const initialForm = {
   title: '',
   firstName: '',
   surname: '',
-}
+};
 
 function App() {
 
   const [memberList, setMemberList] = useState(initialMembers);
-  const [memberForm, setMemberForm] = useState();
+  const [memberForm, setMemberForm] = useState(initialForm);
 
   const onTitleChange = e => {
     setMemberForm({
@@ -41,15 +41,35 @@ function App() {
     })
   }
 
-  return (
-    <div className="App">
-      <MemberForm />
+  const formSubmit = e => {
+    e.preventDefault();
+    const newMember = {
+      id: uuid(),
+      title: memberForm.title,
+      firstName: memberForm.firstName,
+      surname: memberForm.surname,
+    };
+    const newMemberList = memberList.concat(newMember);
+    setMemberList(newMemberList);
+    setMemberForm(initialForm);
+  }
 
-      {memberList.map(member => (
+  return (
+  
+    <div className="App">
+      <MemberForm 
+        onTitleChange={onTitleChange}
+        onFirstNameChange={onFirstNameChange}
+        onSurnameChange={onSurnameChange}
+        formSubmit={formSubmit}
+      />
+      {
+        memberList.map(member => (
         <p key={member.id}>
           {member.title} {member.firstName} {member.surname}
         </p>
-      ))}
+        ))
+      }
     </div>
   );
 };
@@ -58,20 +78,33 @@ export default App;
 
 function MemberForm(props) {
 
-  const { Title, firstName, surname } = props;
+  const { onTitleChange, onFirstNameChange, onSurnameChange, formSubmit,  } = props;
 
   return (
     <form>
       <label htmlFor='titleInput'> Title </label>
-      <input id='titleInput' type='text'/>
+      <input
+        // value=
+        id='titleInput' 
+        type='text'
+        onChange={onTitleChange}
+      />
 
       <label htmlFor='firstNameInput'> First Name </label>
-      <input id='firstNameInput' type='text'/>
+      <input 
+        id='firstNameInput' 
+        type='text'
+        onChange={onFirstNameChange}
+      />
 
       <label htmlFor='surnameInput'> Surname </label>
-      <input id='surnameInput' type='text'/>
+      <input 
+        id='surnameInput' 
+        type='text'
+        onChange={onSurnameChange}
+      />
 
-      <button>
+      <button onClick={formSubmit}>
         Submit
       </button>
     </form>
